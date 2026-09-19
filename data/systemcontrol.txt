@@ -1,0 +1,62 @@
+# SYSTEM CONTROL
+
+## SCREEN
+
+Lock the screen
+$ dbus-send --type=method_call --dest=org.freedesktop.ScreenSaver /ScreenSaver org.freedesktop.ScreenSaver.Lock
+
+Unlock the screen
+$ dbus-send --type=method_call --dest=org.freedesktop.ScreenSaver /ScreenSaver org.freedesktop.ScreenSaver.SetActive boolean:false
+
+Turn off the monitor
+$ xset dpms force off
+
+## POWER
+
+Reboot the system
+$ systemctl reboot
+
+Shut down the system
+$ systemctl poweroff
+
+Schedule shutdown at a specific time
+$ shutdown -h 18:45 "Server is going down for maintenance"
+
+Suspend the system
+$ systemctl suspend
+
+Hibernate the system
+$ systemctl hibernate
+
+## WIFI
+
+Turn Wi-Fi off
+$ nmcli nm wifi off
+
+Turn Wi-Fi on
+$ nmcli nm wifi on
+
+## BLUETOOTH
+
+Stop Bluetooth service
+$ systemctl stop bluetooth
+
+Start Bluetooth service
+$ systemctl start bluetooth
+
+## SERVICES
+
+List running services
+$ systemctl list-units --type=service
+
+Start a service
+$ systemctl start [serviceName]
+
+Stop a service
+$ systemctl stop [serviceName]
+
+Enable a service at boot
+$ systemctl enable [serviceName]
+
+View service logs
+$ journalctl -u [serviceName]

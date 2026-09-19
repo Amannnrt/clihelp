@@ -1,0 +1,243 @@
+# BACKUP & IMAGING
+
+## BACKUP STRATEGY
+
+A good backup follows the 3-2-1 rule:
+
+3 copies of your data
+2 different types of storage
+1 copy stored offsite
+
+Sync files to another disk
+$ rsync
+
+Versioned and deduplicated backups
+$ borg
+$ restic
+
+Clone a disk or partition
+$ dd
+$ partclone
+
+Rescue a failing drive
+$ ddrescue
+
+Sync to cloud storage
+$ rclone
+
+Create filesystem snapshots
+$ lvm
+$ btrfs
+$ zfs
+
+Test your backups by restoring them regularly.
+
+## FILE BACKUPS WITH RSYNC
+
+Copy a directory to another disk
+$ rsync -a /home/user/ /mnt/backup/user/
+
+Copy with progress information
+$ rsync -ah --info=progress2 /data/ /mnt/backup/data/
+
+Mirror a directory and remove deleted files from the destination
+$ rsync -a --delete /data/ /mnt/backup/data/
+
+Preview changes without modifying anything
+$ rsync -a --delete --dry-run /data/ /mnt/backup/data/
+
+Skip matching files
+$ rsync -a --exclude="*.log" /data/ /mnt/backup/data/
+
+The trailing slash matters: `src/` copies the contents of src, while `src` copies the directory itself.
+
+Always use `--dry-run` before using `--delete`.
+
+## BACKUPS OVER SSH
+
+Copy a directory to a remote host
+$ rsync -avz /data/ [user]@[host]:/backup/data/
+
+Copy a directory from a remote host
+$ rsync -avz [user]@[host]:/var/www/ /mnt/backup/www/
+
+Use a custom SSH port
+$ rsync -avz -e "ssh -p 2222" /data/ [user]@[host]:/backup/data/
+
+Copy a single file with SCP
+$ scp backup.tar.gz [user]@[host]:/backup/
+
+## INCREMENTAL SNAPSHOTS
+
+Create a snapshot using hard links to unchanged files
+$ rsync -a --delete --link-dest=/backup/prev /data/ /backup/[date]/
+
+Each snapshot appears as a complete directory while unchanged files share storage with the previous snapshot.
+
+## ARCHIVING BACKUPS
+
+Create a dated compressed backup
+$ tar czf backup-$(date +%F).tar.gz /home/user
+
+Extract a backup
+$ tar xf backup-2026-06-06.tar.gz
+
+Create a zstd-compressed backup
+$ tar --zstd -cf backup.tar.zst /data
+
+Create an incremental tar backup
+$ tar czf full.tar.gz -g backup.snar /data
+
+Create the next incremental backup
+$ tar czf incr1.tar.gz -g backup.snar /data
+
+Restore the full backup first, followed by each incremental backup in order.
+
+Stream a compressed backup directly to a remote host
+$ tar czf - /data | ssh [user]@[host] "cat > /backup/data.tar.gz"
+
+## DEDUPLICATED BACKUPS
+
+Initialize a Borg repository
+$ borg init --encryption=repokey /mnt/backup/repo
+
+Create a compressed and deduplicated backup
+$ borg create --compression zstd /mnt/backup/repo::{now} /home/user
+
+Initialize a Restic repository
+$ restic -r /mnt/backup/repo init
+
+Create a Restic backup
+$ restic -r /mnt/backup/repo backup /home/user
+
+Remove old Borg backups according to a retention policy
+$ borg prune --keep-daily=7 --keep-weekly=4 /mnt/backup/repo
+
+Free unused Borg repository space
+$ borg compact /mnt/backup/repo
+
+Remove old Restic backups
+$ restic -r /mnt/backup/repo forget --keep-daily 7 --keep-weekly 4 --prune
+
+Test restoring a Restic backup
+$ restic -r /mnt/backup/repo restore latest --target /tmp/restore-test
+
+Mount a Borg repository for browsing
+$ borg mount /mnt/backup/repo /mnt/restore
+
+## DATABASE BACKUPS
+
+Back up all MySQL databases
+$ mysqldump --all-databases > mysql-backup.sql
+
+Back up all PostgreSQL databases
+$ pg_dumpall > postgres-backup.sql
+
+Back up a SQLite database
+$ sqlite3 app.db ".backup app-backup.db"
+
+Do not copy database files while they are actively being modified. Use a database dump or a consistent filesystem snapshot.
+
+## DISK & PARTITION IMAGING
+
+List disks and partitions before imaging
+$ lsblk
+
+Clone a disk to another disk
+$ sudo dd if=/dev/sda of=/dev/sdb bs=4M status=progress
+
+Create a compressed partition image
+$ sudo dd if=/dev/sda1 bs=4M status=progress | gzip > sda1.img.gz
+
+Restore a compressed image
+$ gunzip -c sda1.img.gz | sudo dd of=/dev/sda1 bs=4M status=progress
+
+IMPORTANT: `dd` can overwrite the target immediately. Verify the input and output devices carefully. Image unmounted partitions whenever possible.
+
+## WRITE AN ISO TO USB
+
+Write an ISO image to a USB device
+$ sudo dd if=distro.iso of=/dev/sdc bs=4M status=progress conv=fsync
+
+Alternative using cp
+$ sudo cp distro.iso /dev/sdc && sync
+
+Remove old filesystem signatures
+$ sudo wipefs -a /dev/sdc
+
+Make sure `/dev/sdc` is the USB device and not another disk.
+
+## RESILIENT DISK IMAGING
+
+Image a failing drive with ddrescue
+$ sudo ddrescue /dev/sda rescue.img rescue.map
+
+Retry failed sectors
+$ sudo ddrescue -r3 /dev/sda rescue.img rescue.map
+
+Create an image containing only used filesystem blocks
+$ sudo partclone.ext4 -c -s /dev/sda1 -o sda1.img
+
+Restore a Partclone image
+$ sudo partclone.ext4 -r -s sda1.img -o /dev/sda1
+
+Clonezilla provides a guided environment for disk cloning and bare-metal backups.
+
+## FILESYSTEM SNAPSHOTS
+
+Create an LVM snapshot
+$ sudo lvcreate -s -n root_snap -L 5G /dev/vg0/root
+
+Mount an LVM snapshot read-only
+$ sudo mount -o ro /dev/vg0/root_snap /mnt/snap
+
+Back up the snapshot
+$ sudo rsync -a /mnt/snap/ /mnt/backup/root/
+
+Remove the LVM snapshot
+$ sudo umount /mnt/snap && sudo lvremove /dev/vg0/root_snap
+
+Create a read-only Btrfs snapshot
+$ sudo btrfs subvolume snapshot -r / / .snapshots/[date]
+
+Create a ZFS snapshot
+$ sudo zfs snapshot tank/home@[date]
+
+Snapshots are not backups by themselves when stored on the same disk.
+
+## CLOUD & REMOTE SYNC
+
+Copy data to a configured cloud remote
+$ rclone copy /data remote:backup/data
+
+Sync data and show progress
+$ rclone sync /data remote:backup/data --progress
+
+Preview changes without transferring
+$ rclone sync /data remote:backup --dry-run
+
+Verify source and destination
+$ rclone check /data remote:backup/data
+
+Mount a remote as a local directory
+$ rclone mount remote:backup /mnt/remote
+
+Use `copy` when you do not want destination files deleted. `sync` makes the destination match the source.
+
+## VERIFY BACKUPS
+
+Create a SHA-256 checksum
+$ sha256sum backup.tar.gz > backup.sha256
+
+Verify a backup checksum
+$ sha256sum -c backup.sha256
+
+## AUTOMATE BACKUPS
+
+Edit the current user's crontab
+$ crontab -e
+
+Run rsync every night at 2 AM
+$ 0 2 * * * rsync -a --delete /data/ /mnt/backup/data/
+
+Automate backups, but periodically verify that the backups can actually be restored.

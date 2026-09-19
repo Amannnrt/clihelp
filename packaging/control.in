@@ -1,0 +1,10 @@
+Package: clihelp
+Version: @VERSION@
+Section: utils
+Priority: optional
+Architecture: @ARCH@
+Maintainer: Mohammad Aman R T <iammdaman2004@gmail.com>
+Homepage: https://github.com/Amannnrt/clihelp
+Description: Linux cheatsheet for the terminal
+ CLIHELP is a terminal-based Linux cheatsheet that provides
+ categorized commands and examples directly from the command line.

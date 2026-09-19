@@ -1,0 +1,111 @@
+# USERS & GROUPS
+
+## USERS
+
+Create a user with a home directory
+$ useradd -m -s /bin/bash [name]
+
+Create a user interactively
+$ adduser [name]
+
+Set a user's password
+$ passwd [name]
+
+Delete a user
+$ userdel [name]
+
+Delete a user and their home directory
+$ userdel -r [name]
+
+Rename a user
+$ usermod -l [newUsername] [oldUsername]
+
+## MODIFY USERS
+
+Change a user's login shell
+$ chsh -s /bin/zsh [name]
+
+Change a user's home directory
+$ usermod -d /new/home -m [name]
+
+Lock a user account
+$ usermod -L [name]
+
+Unlock a user account
+$ usermod -U [name]
+
+Force a password change at next login
+$ passwd -e [name]
+
+Show password aging information
+$ chage -l [name]
+
+## GROUPS
+
+Create a group
+$ groupadd [name]
+
+Rename a group
+$ groupmod -n [newGroupname] [oldGroupname]
+
+Delete a group
+$ groupdel [name]
+
+Add a user to a group
+$ usermod -aG [groupName] [userName]
+
+Remove a user from a group
+$ gpasswd -d [userName] [groupName]
+
+Activate a group in the current shell
+$ newgrp [groupName]
+
+## SUDO ACCESS
+
+Add a user to the sudo group
+$ usermod -aG sudo [user]
+
+Add a user to the wheel group
+$ usermod -aG wheel [user]
+
+Safely edit the sudoers file
+$ visudo
+
+## LIST USERS & GROUPS
+
+List all users
+$ getent passwd
+
+List all groups
+$ getent group
+
+Show a user's ID and groups
+$ id [user]
+
+Show the current user
+$ whoami
+
+Show the groups of a user
+$ groups [user]
+
+## LOGGED-IN USERS
+
+Show currently logged-in users
+$ who
+
+Show logged-in users and their activity
+$ w
+
+Show login history
+$ last
+
+## SWITCH USERS
+
+Switch to another user
+$ su - [user]
+
+Open a root shell with sudo
+$ sudo -i
+
+Run a command as another user
+$ sudo -u [user] [command]

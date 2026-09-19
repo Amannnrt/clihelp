@@ -1,0 +1,92 @@
+# JSON
+
+## GETTING STARTED
+
+Pretty-print JSON from a file
+$ jq . file.json
+
+Pretty-print JSON from stdin
+$ echo '{"name": "Linux"}' | jq .
+
+Pretty-print JSON from an API response
+$ curl -s https://api.github.com/users/torvalds | jq .
+
+## SELECTING VALUES
+
+Get an object field
+$ jq '.name' file.json
+
+Get a nested field
+$ jq '.user.address.city' file.json
+
+Get an array element
+$ jq '.items[0]' file.json
+
+Get a field from every array element
+$ jq -r '.items[].name' file.json
+
+## FILTERING & TRANSFORMING
+
+Select items matching a condition
+$ jq '.items[] | select(.price > 10)' file.json
+
+Create a list of values
+$ jq '.items | map(.name)' file.json
+
+Count items
+$ jq '.items | length' file.json
+
+List object keys
+$ jq 'keys' file.json
+
+Sort items by a field
+$ jq '.items | sort_by(.price)' file.json
+
+Build a new object from existing fields
+$ jq '.items[] | {title: .name, cost: .price}' file.json
+
+## MODIFYING JSON
+
+Add or change a field
+$ echo '{"name": "Linux"}' | jq '.year = 1991'
+
+Remove a field
+$ echo '{"name": "Linux", "year": 1991}' | jq 'del(.year)'
+
+jq does not modify files in place. Redirect the output to save changes:
+$ jq '.year = 1991' file.json > new.json
+
+## CREATING JSON
+
+Create JSON from shell arguments
+$ jo -p name=Linux year=1991
+
+Create JSON directly with jq
+$ jq -n '{name: "Linux", year: 1991}'
+
+## EXPLORING & SEARCHING
+
+Search JSON with grep
+$ gron file.json | grep "name"
+
+Open JSON interactively
+$ jless file.json
+
+Open JSON with an interactive viewer
+$ fx file.json
+
+## CONVERTING
+
+Read a value from YAML
+$ yq '.name' config.yaml
+
+Convert JSON to YAML
+$ dasel -r json -w yaml < file.json
+
+Convert command output to JSON
+$ jc ifconfig | jq '.[0].ipv4_addr'
+
+## COMPACT OUTPUT
+
+Print JSON on a single line
+$ jq -c . file.json

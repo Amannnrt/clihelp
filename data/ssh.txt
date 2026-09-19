@@ -1,0 +1,105 @@
+# SSH
+
+## CONNECTING
+
+Connect to a remote host
+$ ssh [user]@[host]
+
+Connect using a custom port
+$ ssh -p 2222 [user]@[host]
+
+Run a command on a remote host
+$ ssh [user]@[host] [command]
+
+End an SSH session
+$ exit
+
+Force-close a hanging SSH session
+Press Enter, then type ~.
+
+## SSH KEYS
+
+Generate an Ed25519 key pair
+$ ssh-keygen -t ed25519
+
+Generate an RSA key for legacy servers
+$ ssh-keygen -t rsa -b 4096
+
+Copy your public key to a server
+$ ssh-copy-id [user]@[host]
+
+Connect using a specific private key
+$ ssh -i [keyFile] [user]@[host]
+
+Add a key to the SSH agent
+$ ssh-add [keyFile]
+
+List keys loaded in the SSH agent
+$ ssh-add -l
+
+Keep private keys protected and never share them.
+
+## SSH CONFIG
+
+Create a host shortcut in ~/.ssh/config
+$ Host myserver
+HostName server.example.com
+User admin
+Port 2222
+IdentityFile ~/.ssh/id_ed25519
+
+Connect using the configured shortcut
+$ ssh myserver
+
+## FILE TRANSFER
+
+Copy a file to a remote host
+$ scp [localFile] [user]@[host]:[remotePath]
+
+Copy a file from a remote host
+$ scp [user]@[host]:[remoteFile] .
+
+Copy a directory to a remote host
+$ scp -r [localDir] [user]@[host]:[remoteDir]
+
+Synchronize a directory with a remote host
+$ rsync -avz [localDir]/ [user]@[host]:[remoteDir]/
+
+Start an interactive SFTP session
+$ sftp [user]@[host]
+
+Mount a remote directory locally
+$ sshfs [user]@[host]:[remoteDir] [localDir]
+
+Unmount a mounted SSHFS directory
+$ fusermount -u [localDir]
+
+## PORT FORWARDING
+
+Forward a remote service to a local port
+$ ssh -L 5432:localhost:5432 [user]@[host]
+
+Create a tunnel without opening a shell
+$ ssh -N -L 8080:internal-host:80 [user]@[gateway]
+
+Forward a remote port back to your machine
+$ ssh -R 8080:localhost:3000 [user]@[host]
+
+Create a SOCKS5 proxy
+$ ssh -D 9999 [user]@[host]
+
+## JUMP HOSTS & X11
+
+Connect through a bastion/jump host
+$ ssh -J [user]@[bastion] [user]@[internalHost]
+
+Enable X11 forwarding
+$ ssh -X [user]@[host]
+
+## KEEP SESSIONS ALIVE
+
+Keep idle SSH connections alive
+$ Host *
+ServerAliveInterval 60
+
+For long-running work, use tmux on the remote server so you can reconnect without losing the session.

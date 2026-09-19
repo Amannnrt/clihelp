@@ -1,0 +1,188 @@
+# NETWORK
+
+## INTERFACES & IP ADDRESSES
+
+Show network interfaces and IP addresses
+$ ip a
+
+Show network interfaces
+$ ip link show
+
+Show NetworkManager device status
+$ nmcli device status
+
+Show interfaces with ifconfig
+$ ifconfig -a
+
+## NETWORK HARDWARE
+
+Show network hardware
+$ lspci | grep -i 'network|ethernet'
+
+Show network hardware details
+$ lshw -class network
+
+Show Ethernet device information
+$ ethtool [interface]
+
+## CONFIGURING INTERFACES
+
+Bring an interface up
+$ sudo ip link set [interface] up
+
+Bring an interface down
+$ sudo ip link set [interface] down
+
+Assign an IP address
+$ sudo ip addr add 192.168.1.50/24 dev [interface]
+
+Release a DHCP lease
+$ sudo dhclient -r [interface]
+
+Request a new DHCP lease
+$ sudo dhclient [interface]
+
+## WI-FI
+
+List available Wi-Fi networks
+$ nmcli device wifi list
+
+Connect to a Wi-Fi network
+$ nmcli device wifi connect [SSID] password [password]
+
+Show the current Wi-Fi password
+$ nmcli device wifi show-password
+
+List stored NetworkManager Wi-Fi passwords
+$ sudo grep -r "psk=" /etc/NetworkManager/system-connections/
+
+Scan Wi-Fi networks with iwd
+$ iwctl station [interface] get-networks
+
+Connect using iwd
+$ iwctl station [interface] connect [SSID]
+
+## EXTERNAL IP
+
+Show your public IP address
+$ curl ifconfig.me
+
+Show your public IP through DNS
+$ dig +short myip.opendns.com @resolver1.opendns.com
+
+## TESTING CONNECTIVITY
+
+Test whether a host is reachable
+$ ping [host]
+
+Send four ping requests
+$ ping -c 4 [host]
+
+Trace the route to a host
+$ traceroute [host]
+
+Trace a route without DNS lookups
+$ tracepath [host]
+
+Live connectivity and route monitor
+$ mtr [host]
+
+Check whether a TCP port is reachable
+$ nc -zv [host] [port]
+
+## NETWORK SPEED
+
+Start an iperf3 server
+$ iperf3 -s
+
+Connect to an iperf3 server
+$ iperf3 -c [serverIp]
+
+## DNS LOOKUPS
+
+Look up a domain
+$ dig [domain]
+
+Show only the DNS answer
+$ dig +short [domain]
+
+Reverse DNS lookup
+$ dig -x [ip]
+
+Look up MX records
+$ dig MX [domain]
+
+Simple DNS lookup
+$ host [domain]
+
+Query DNS with nslookup
+$ nslookup [domain]
+
+Query DNS using systemd-resolved
+$ resolvectl query [domain]
+
+## DOMAIN INFORMATION
+
+Look up domain registration information
+$ whois [domain]
+
+## DOWNLOADING FILES
+
+Download a file
+$ wget [url]
+
+Resume a download
+$ wget -c [url]
+
+Download using the remote filename
+$ curl -LO [url]
+
+Download using multiple connections
+$ aria2c [url]
+
+## OPEN PORTS & SOCKETS
+
+Show listening TCP/UDP ports and processes
+$ sudo ss -tulpn
+
+Show network connections with lsof
+$ lsof -i
+
+Show processes using a specific port
+$ lsof -i :80
+
+## ROUTING
+
+Show the routing table
+$ ip route
+
+Show which route is used for a destination
+$ ip route get 1.1.1.1
+
+## BANDWIDTH USAGE
+
+Monitor bandwidth by connection
+$ iftop
+
+Monitor bandwidth by process
+$ nethogs
+
+Monitor bandwidth by interface
+$ nload
+
+Monitor network interfaces
+$ bmon
+
+Show long-term bandwidth statistics
+$ vnstat
+
+## HOSTNAME
+
+Show the hostname
+$ hostname
+
+Show hostname and system information
+$ hostnamectl
+
+Change the hostname
+$ sudo hostnamectl set-hostname [newName]

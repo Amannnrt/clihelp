@@ -1,0 +1,89 @@
+# PRINTING
+
+## GETTING STARTED
+
+Linux printing is handled by CUPS. Common commands include `lp`, `lpstat`, `cancel`, `lpr`, `lpq`, and `lprm`.
+
+CUPS web interface:
+$ http://localhost:631
+
+## LIST PRINTERS
+
+Show available printers and the default printer
+$ lpstat -p -d
+
+Show full printer status
+$ lpstat -t
+
+Set the default printer
+$ lpoptions -d [printerName]
+
+## PRINT A FILE
+
+Print to the default printer
+$ lp [file]
+
+Print to a specific printer
+$ lp -d [printerName] [file]
+
+Print using the BSD-style command
+$ lpr [file]
+
+Print to a specific printer
+$ lpr -P [printerName] [file]
+
+Print command output
+$ echo "Hello" | lp
+
+Format and print a text file
+$ pr [file] | lpr
+
+## PRINT OPTIONS
+
+Print multiple copies
+$ lp -n 3 [file]
+
+Print double-sided
+$ lp -o sides=two-sided-long-edge [file]
+
+Print specific pages
+$ lp -o page-ranges=1-4,7 [file]
+
+Print in landscape and fit to page
+$ lp -o landscape -o fit-to-page [file]
+
+## PRINT QUEUE
+
+Show queued print jobs
+$ lpq
+
+Show all queued jobs
+$ lpstat -o
+
+## CANCEL PRINT JOBS
+
+Cancel a specific job
+$ cancel [jobID]
+
+Cancel all jobs on a printer
+$ cancel -a [printerName]
+
+Remove a specific job
+$ lprm [jobID]
+
+Remove all of your own jobs
+$ lprm -
+
+## MANAGE PRINTERS
+
+Disable a printer
+$ cupsdisable [printerName]
+
+Enable a printer
+$ cupsenable [printerName]
+
+List available printer devices and connections
+$ lpinfo -v
+
+Add a network printer using IPP Everywhere
+$ lpadmin -p [printerName] -E -v ipp://[host]/ipp/print -m everywhere

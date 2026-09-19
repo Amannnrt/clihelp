@@ -1,0 +1,24 @@
+# Build output
+/clihelp
+/build/
+
+# Compiled object files
+*.o
+*.a
+*.so
+
+# Editor / IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Logs
+*.log

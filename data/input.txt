@@ -1,0 +1,81 @@
+# INPUT
+
+## DISPLAY SERVER
+
+Check whether the session uses X11 or Wayland
+$ echo $XDG_SESSION_TYPE
+
+## CLIPBOARD — X11
+
+Copy text or command output to the clipboard
+$ echo "Hello world" | xclip -sel clip
+
+Copy a file to the clipboard
+$ xclip -sel clip [file]
+
+Read the clipboard
+$ xclip -o -sel clip
+
+## CLIPBOARD — WAYLAND
+
+Copy text to the clipboard
+$ wl-copy "Hello world"
+
+Copy command output to the clipboard
+$ uname -a | wl-copy
+
+Read the clipboard
+$ wl-paste
+
+## MOUSE — X11
+
+Move the mouse to a screen position
+$ xdotool mousemove [x] [y]
+
+Move the mouse relative to its current position
+$ xdotool mousemove_relative [x] [y]
+
+Left click
+$ xdotool click 1
+
+Right click
+$ xdotool click 3
+
+## MOUSE — WAYLAND / YDOTOOL
+
+Move the mouse to a screen position
+$ ydotool mousemove --absolute [x] [y]
+
+Move the mouse relative to its current position
+$ ydotool mousemove [x] [y]
+
+Left click
+$ ydotool click 0xC0
+
+Right click
+$ ydotool click 0xC1
+
+## TYPING
+
+Type text with X11
+$ xdotool type "Hello world"
+
+Type text with Wayland
+$ wtype "Hello world"
+
+Type text with ydotool
+$ ydotool type "Hello world"
+
+## KEYBOARD
+
+Press a key with X11
+$ xdotool key Escape
+
+Press a key combination
+$ xdotool key ctrl+shift+t
+
+Press a key with Wayland
+$ wtype -k Escape
+
+Press a key with ydotool
+$ ydotool key 1:1 1:0

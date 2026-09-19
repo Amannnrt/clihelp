@@ -1,0 +1,200 @@
+# TMUX
+
+## GETTING STARTED
+
+Tmux keeps multiple terminal sessions running inside one window and allows you to reconnect after disconnecting.
+
+Start tmux
+$ tmux
+
+Create a named session
+$ tmux new -s mysession
+
+The default tmux prefix is Ctrl+b. Press Ctrl+b, release it, then press the command key.
+
+## SESSIONS
+
+List sessions
+$ tmux ls
+
+Attach to a session
+$ tmux attach -t mysession
+
+Create a detached session
+$ tmux new -d -s mysession
+
+Rename a session
+$ tmux rename-session -t old new
+
+Kill a session
+$ tmux kill-session -t mysession
+
+Kill all tmux sessions
+$ tmux kill-server
+
+Detach from the current session
+$ Ctrl+b d
+
+List and switch between sessions
+$ Ctrl+b s
+
+Switch to the previous session
+$ Ctrl+b (
+
+Switch to the next session
+$ Ctrl+b )
+
+## WINDOWS
+
+Create a new window
+$ Ctrl+b c
+
+Switch to the next window
+$ Ctrl+b n
+
+Switch to the previous window
+$ Ctrl+b p
+
+Switch to a window by number
+$ Ctrl+b 0-9
+
+Switch to the last active window
+$ Ctrl+b l
+
+List and select windows
+$ Ctrl+b w
+
+Rename the current window
+$ Ctrl+b ,
+
+Move the current window to another number
+$ Ctrl+b .
+
+Close the current window
+$ Ctrl+b &
+
+## PANES
+
+Split into left and right panes
+$ Ctrl+b %
+
+Split into top and bottom panes
+$ Ctrl+b "
+
+Move between panes
+$ Ctrl+b Arrow
+
+Cycle to the next pane
+$ Ctrl+b o
+
+Jump to the last active pane
+$ Ctrl+b ;
+
+Toggle pane zoom
+$ Ctrl+b z
+
+Close the current pane
+$ Ctrl+b x
+
+Swap with the previous pane
+$ Ctrl+b {
+
+Swap with the next pane
+$ Ctrl+b }
+
+Cycle through pane layouts
+$ Ctrl+b Space
+
+Show pane numbers
+$ Ctrl+b q
+
+Move the current pane into a new window
+$ Ctrl+b !
+
+## RESIZE PANES
+
+Resize a pane by one cell
+$ Ctrl+b Ctrl+Arrow
+
+Resize a pane by five cells
+$ Ctrl+b Alt+Arrow
+
+Resize a pane down by 10 cells
+$ tmux resize-pane -D 10
+
+Resize a pane right by 10 cells
+$ tmux resize-pane -R 10
+
+## COPY MODE
+
+Enter copy mode
+$ Ctrl+b [
+
+Exit copy mode
+$ q
+
+Enable vi-style copy mode
+$ echo "setw -g mode-keys vi" >> ~/.tmux.conf
+
+Move around in vi-style copy mode
+$ h j k l
+
+Jump to the top or bottom of history
+$ g / G
+
+Search forward
+$ /
+
+Search backward
+$ ?
+
+Select text
+$ Space
+
+Copy the selection
+$ Enter
+
+Paste copied text
+$ Ctrl+b ]
+
+## COMMAND MODE
+
+Open the tmux command prompt
+$ Ctrl+b :
+
+Create a named window
+$ new-window -n mywin
+
+Split the current window horizontally
+$ split-window -h
+
+Swap with window 0
+$ swap-window -t 0
+
+Set an even horizontal layout
+$ select-layout even-horizontal
+
+Enable synchronized input across panes
+$ setw synchronize-panes on
+
+Disable synchronized input
+$ setw synchronize-panes off
+
+## CONFIGURATION
+
+Tmux reads configuration from ~/.tmux.conf.
+
+Enable mouse support
+$ set -g mouse on
+
+Increase scrollback history
+$ set -g history-limit 50000
+
+Start window numbering at 1
+$ set -g base-index 1
+
+Start pane numbering at 1
+$ setw -g pane-base-index 1
+
+Reload the configuration
+$ tmux source-file ~/.tmux.conf

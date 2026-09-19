@@ -1,0 +1,210 @@
+# SYSTEM RECOVERY
+
+## RECOVERY BASICS
+
+Boot from a live USB or rescue environment
+$ dd if=linux.iso of=/dev/sdc bs=4M status=progress conv=fsync
+
+Identify disks and filesystems
+$ lsblk -f
+
+Show filesystem UUIDs and types
+$ blkid
+
+Show partition tables
+$ fdisk -l
+
+Show currently mounted filesystems
+$ findmnt
+
+## ENCRYPTED & LVM VOLUMES
+
+Unlock a LUKS encrypted partition
+$ cryptsetup open /dev/sda2 cryptroot
+
+Scan for LVM volume groups
+$ vgscan
+
+Activate LVM volumes
+$ vgchange -ay
+
+List logical volumes
+$ lvscan
+
+## MOUNT & CHROOT
+
+Mount the root filesystem
+$ mount /dev/sda2 /mnt
+
+Mount the EFI partition
+$ mount /dev/sda1 /mnt/boot/efi
+
+Bind system directories before chroot
+$ mount --rbind /dev /mnt/dev
+$ mount --rbind /proc /mnt/proc
+$ mount --rbind /sys /mnt/sys
+$ mount --rbind /run /mnt/run
+
+Enter the installed system
+$ chroot /mnt /bin/bash
+
+Arch Linux chroot
+$ arch-chroot /mnt
+
+Unmount the recovered system
+$ umount -R /mnt
+
+## BOOTLOADER
+
+Install GRUB for legacy BIOS
+$ grub-install /dev/sda
+
+Install GRUB for UEFI
+$ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+
+Rebuild GRUB configuration
+$ grub-mkconfig -o /boot/grub/grub.cfg
+
+Debian/Ubuntu GRUB configuration
+$ update-grub
+
+Show UEFI boot entries
+$ efibootmgr -v
+
+## INITRAMFS
+
+Debian / Ubuntu
+$ update-initramfs -u -k all
+
+Arch Linux
+$ mkinitcpio -P
+
+Fedora / RHEL
+$ dracut -f --regenerate-all
+
+## RESCUE & EMERGENCY MODE
+
+Enter rescue mode
+$ systemctl rescue
+
+Enter emergency mode
+$ systemctl emergency
+
+Return to normal mode
+$ systemctl default
+
+Start a root shell from the boot menu
+$ init=/bin/bash
+
+Remount root filesystem as writable
+$ mount -o remount,rw /
+
+## RESET ROOT PASSWORD
+
+Change the root password
+$ passwd root
+
+From a rescue environment
+$ chroot /mnt /bin/bash
+$ passwd root
+
+## FILESYSTEM REPAIR
+
+Check a filesystem
+$ fsck -f /dev/sda2
+
+Repair an ext2/3/4 filesystem
+$ e2fsck -fy /dev/sda2
+
+Repair an XFS filesystem
+$ xfs_repair /dev/sda2
+
+Check a Btrfs filesystem
+$ btrfs check /dev/sda2
+
+Repair Btrfs as a last resort
+$ btrfs check --repair /dev/sda2
+
+Check an unmounted filesystem only.
+
+## FIX /etc/fstab
+
+Remount root as writable
+$ mount -o remount,rw /
+
+Test all fstab entries
+$ mount -a
+
+Verify fstab configuration
+$ findmnt --verify
+
+## BROKEN PACKAGES
+
+Finish pending package configuration
+$ dpkg --configure -a
+
+Fix broken Debian/Ubuntu dependencies
+$ apt --fix-broken install
+
+Check Fedora/RHEL package state
+$ dnf check
+
+Synchronize Fedora/RHEL packages
+$ dnf distro-sync
+
+Rebuild the RPM database
+$ rpm --rebuilddb
+
+## DIAGNOSTICS & LOGS
+
+View the current boot log
+$ journalctl -xb
+
+Show errors from the previous boot
+$ journalctl -b -1 -p err
+
+Show logs from an installed system
+$ journalctl -D /mnt/var/log/journal -xb
+
+Show kernel warnings and errors
+$ dmesg --level=err,warn
+
+## DISK HEALTH
+
+Show basic disk health
+$ smartctl -H /dev/sda
+
+Show detailed SMART information
+$ smartctl -a /dev/sda
+
+Run a short SMART test
+$ smartctl -t short /dev/sda
+
+Scan for bad sectors
+$ badblocks -sv /dev/sda
+
+## RECOVER DELETED DATA
+
+Recover damaged partitions
+$ testdisk /dev/sda
+
+Recover files by file signatures
+$ photorec /dev/sda
+
+Recover deleted ext3/ext4 files
+$ extundelete /dev/sda2 --restore-all
+
+## DISK IMAGING
+
+Create an image of a failing disk
+$ ddrescue /dev/sda rescue.img rescue.map
+
+Attach a disk image read-only
+$ losetup -rfP --show rescue.img
+
+Mount a partition from the image read-only
+$ mount -o ro /dev/loop0p2 /mnt
+
+IMPORTANT: Stop writing to a disk as soon as data loss is discovered.
+For a failing disk, image it before attempting repairs.
+Never run filesystem repair on a mounted writable filesystem.

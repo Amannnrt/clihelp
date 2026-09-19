@@ -1,0 +1,140 @@
+# VIDEO & AUDIO
+
+## SCREENSHOTS
+
+Take a screenshot with Flameshot
+$ flameshot gui
+
+Take a screenshot with GNOME Screenshot
+$ gnome-screenshot
+
+Take a screenshot with Spectacle
+$ spectacle
+
+Take a screenshot on X11
+$ scrot
+
+Save a screenshot with maim
+$ maim [fileName].png
+
+Take a screenshot on Wayland
+$ grim [fileName].png
+
+## SCREEN RECORDING
+
+Record the screen on X11
+$ ffmpeg -f x11grab -i :0.0 recording.mp4
+
+Record the screen on Wayland
+$ wf-recorder -f recording.mp4
+
+Record a terminal session
+$ asciinema rec session.cast
+
+## WEBCAM
+
+Take a photo from a webcam
+$ fswebcam [fileName].jpg
+
+Take a webcam photo with FFmpeg
+$ ffmpeg -f v4l2 -i /dev/video0 -frames:v 1 [fileName].jpg
+
+## PLAY AUDIO & VIDEO
+
+Play a media file with mpv
+$ mpv [file]
+
+Play a media file with VLC
+$ vlc [file]
+
+Play a media file with FFmpeg
+$ ffplay [file]
+
+Play a WAV file
+$ aplay [file]
+
+## VOLUME
+
+Open the ALSA mixer
+$ alsamixer
+
+Open the PulseAudio/PipeWire mixer
+$ pavucontrol
+
+Increase the default output volume
+$ pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+Toggle mute on the default output
+$ pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+Mute the default ALSA output
+$ amixer set Master mute
+
+Unmute the default ALSA output
+$ amixer set Master unmute
+
+## RECORD AUDIO
+
+Record from the default microphone
+$ arecord -f cd [fileName].wav
+
+Record audio with FFmpeg
+$ ffmpeg -f alsa -i default [fileName].wav
+
+## SPEECH & BEEP
+
+Make the computer speak
+$ spd-say "I am a robot"
+
+Use eSpeak for speech synthesis
+$ espeak "I am a robot"
+
+Play a system beep
+$ beep
+
+## INSPECT MEDIA FILES
+
+Show media codecs, resolution, duration, and bitrate
+$ ffprobe [file]
+
+Show detailed media information
+$ mediainfo [file]
+
+## CONVERT MEDIA
+
+Convert between video formats
+$ ffmpeg -i input.avi output.mp4
+
+Convert MP4 to WebM
+$ ffmpeg -i input.mp4 output.webm
+
+Extract audio as MP3
+$ ffmpeg -i video.mp4 -vn -b:a 192k audio.mp3
+
+Resize a video while keeping the aspect ratio
+$ ffmpeg -i input.mp4 -vf scale=1280:-1 output.mp4
+
+## CUT VIDEO
+
+Cut a video without re-encoding
+$ ffmpeg -ss 00:01:30 -i input.mp4 -t 00:00:20 -c copy clip.mp4
+
+Cut and re-encode for more accurate cuts
+$ ffmpeg -ss 00:01:30 -i input.mp4 -t 00:00:20 clip.mp4
+
+## IMAGES & VIDEO
+
+Create a video from numbered images
+$ ffmpeg -framerate 24 -i image%d.jpg video.mp4
+
+Extract frames from a video
+$ ffmpeg -i video.mp4 image%d.jpg
+
+Create an animated GIF
+$ ffmpeg -i video.mp4 -vf "fps=10,scale=480:-1" animation.gif
+
+Convert a GIF to WebP
+$ gif2webp [inputFile] -o [outputFile]
+
+Create an animated WebP
+$ img2webp [inputFile] -o [outputFile]

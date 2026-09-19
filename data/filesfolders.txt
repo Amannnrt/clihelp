@@ -1,0 +1,196 @@
+# FILES & FOLDERS
+
+## NAVIGATING
+
+Show the current directory
+$ pwd
+
+Change directory
+$ cd [path]
+
+Go up one level
+$ cd ..
+
+Go to the home directory
+$ cd ~
+
+Return to the previous directory
+$ cd -
+
+## LISTING CONTENTS
+
+List directory contents
+$ ls
+
+List files with details and hidden files
+$ ls -lah
+
+List by modification time, newest first
+$ ls -lt
+
+Show directories as a tree
+$ tree
+
+## VIEWING FILES
+
+Display a file
+$ cat [fileName]
+
+View and scroll through a file
+$ less [fileName]
+
+Show the first 20 lines
+$ head -n 20 [fileName]
+
+Show the last 20 lines
+$ tail -n 20 [fileName]
+
+Follow a file as it grows
+$ tail -f [logFile]
+
+Identify a file type
+$ file [fileName]
+
+Count lines, words, and bytes
+$ wc [fileName]
+
+## CREATING FILES & FOLDERS
+
+Create an empty file
+$ touch [fileName]
+
+Create a directory
+$ mkdir [folderName]
+
+Create nested directories
+$ mkdir -p path/to/nested/folder
+
+## COPYING & MOVING
+
+Copy a file
+$ cp [fileName] [newFileName]
+
+Copy a directory
+$ cp -r [folder] [folderCopy]
+
+Move or rename a file
+$ mv [oldName] [newName]
+
+Move a file to another directory
+$ mv [fileName] [targetFolder]/
+
+## DELETING
+
+Delete a file
+$ rm [fileName]
+
+Delete a directory and its contents
+$ rm -r [folderName]
+
+Remove an empty directory
+$ rmdir [emptyFolderName]
+
+Move a file to the desktop trash
+$ gio trash [file]
+
+List trashed files
+$ trash-list
+
+Empty the trash
+$ gio trash --empty
+
+## LINKS
+
+Create a symbolic link
+$ ln -s [target] [linkName]
+
+Create a hard link
+$ ln [target] [linkName]
+
+Show the real path of a symbolic link
+$ readlink -f [linkName]
+
+## PERMISSIONS & OWNERSHIP
+
+Show file permissions and ownership
+$ ls -l [file]
+
+Show detailed file information
+$ stat [file]
+
+Make a script executable
+$ chmod +x [script]
+
+Set standard file permissions
+$ chmod 644 [file]
+
+Set standard directory/script permissions
+$ chmod 755 [folder]
+
+Set owner and group
+$ chown [user]:[group] [file]
+
+Change owner and group recursively
+$ chown -R [user]:[group] [folder]
+
+Change the group
+$ chgrp [group] [file]
+
+## COMMON PERMISSION MODES
+
+644  Owner reads/writes, others read
+755  Owner full access, others read/execute
+600  Owner reads/writes only
+700  Owner has full access only
+
+## SEARCH FILE CONTENTS
+
+Search for text in a file
+$ grep "phrase" [fileName]
+
+Search recursively through a directory
+$ grep -rn "phrase" [folder]
+
+Fast recursive text search
+$ rg "phrase"
+
+## COMPARING FILES
+
+Compare two files
+$ diff -u [file1] [file2]
+
+Compare two directories
+$ diff -r [folder1] [folder2]
+
+## DISK USAGE
+
+Show directory sizes
+$ du -h --max-depth=1
+
+Show filesystem free space
+$ df -h
+
+Interactive disk usage viewer
+$ ncdu
+
+## MOUNTING FILESYSTEMS
+
+List disks and filesystems
+$ lsblk -f
+
+Mount a filesystem
+$ mount /dev/[device] [path]
+
+Unmount a filesystem
+$ umount [path]
+
+## EDITING FILES
+
+Edit a file with Nano
+$ nano [fileName]
+
+Edit a file with Vim
+$ vi [fileName]
+
+Edit a file with Emacs
+$ emacs [fileName]

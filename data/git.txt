@@ -1,0 +1,189 @@
+# GIT
+
+## GETTING STARTED
+
+Set your name for commits
+$ git config --global user.name "Your Name"
+
+Set your email for commits
+$ git config --global user.email "[you@example.com](mailto:you@example.com)"
+
+Create a repository
+$ git init
+
+Clone an existing repository
+$ git clone [url]
+
+## EVERYDAY WORKFLOW
+
+Show the current repository status
+$ git status
+
+Stage a file
+$ git add [file]
+
+Stage all changes
+$ git add .
+
+Commit staged changes
+$ git commit -m "describe the change"
+
+Stage changes interactively
+$ git add -p
+
+Upload commits to a remote repository
+$ git push
+
+Download and merge changes from a remote repository
+$ git pull
+
+## BRANCHES
+
+List local branches
+$ git branch
+
+List all branches
+$ git branch -a
+
+Switch to a branch
+$ git switch [branchName]
+
+Create and switch to a new branch
+$ git switch -c [newBranch]
+
+Merge a branch into the current branch
+$ git merge [branchName]
+
+Delete a local branch
+$ git branch -d [branchName]
+
+Force-delete a local branch
+$ git branch -D [branchName]
+
+Delete a remote branch
+$ git push origin --delete [branchName]
+
+## INSPECTING HISTORY
+
+Show commit history
+$ git log
+
+Show a compact graphical history
+$ git log --oneline --graph --all
+
+Show details of a commit
+$ git show [commitHash]
+
+Show who last changed each line
+$ git blame [fileName]
+
+Show unstaged changes
+$ git diff
+
+Show staged changes
+$ git diff --staged
+
+Compare two branches
+$ git diff [branch1]..[branch2]
+
+## UNDOING CHANGES
+
+Discard uncommitted changes to a file
+$ git restore [fileName]
+
+Unstage a file without losing its changes
+$ git restore --staged [fileName]
+
+Modify the most recent commit
+$ git commit --amend
+
+Undo the last commit with a new reversing commit
+$ git revert HEAD
+
+Move the branch back while keeping changes staged
+$ git reset --soft HEAD~1
+
+Move the branch back and discard changes
+$ git reset --hard HEAD~1
+
+Avoid reset --hard and commit --amend on commits already pushed to a shared repository.
+
+## REMOVE IGNORED FILES
+
+Stop tracking files already committed but now listed in .gitignore
+$ git rm -r --cached .
+
+Stage the remaining changes
+$ git add .
+
+Commit the change
+$ git commit -m "remove ignored files"
+
+## STASHING
+
+Temporarily save uncommitted changes
+$ git stash -u
+
+List saved stashes
+$ git stash list
+
+Apply and remove the latest stash
+$ git stash pop
+
+Apply a stash without removing it
+$ git stash apply
+
+## TAGS
+
+List tags
+$ git tag
+
+Create a tag
+$ git tag [tagName]
+
+Create an annotated release tag
+$ git tag -a v1.0 -m "release 1.0"
+
+Delete a tag
+$ git tag -d [tagName]
+
+Push all tags
+$ git push --tags
+
+## REMOTES
+
+Show configured remotes
+$ git remote -v
+
+Add a remote repository
+$ git remote add [remoteName] [remoteURL]
+
+Download changes without merging
+$ git fetch [remoteName]
+
+Pull from a specific remote branch
+$ git pull [remoteName] [branchName]
+
+Push a branch and set its upstream
+$ git push -u [remoteName] [branchName]
+
+## REWRITING HISTORY
+
+Rebase the current branch onto another branch
+$ git rebase [branchName]
+
+Interactively edit recent commits
+$ git rebase -i HEAD~3
+
+Apply a specific commit to the current branch
+$ git cherry-pick [commitHash]
+
+Avoid rebasing commits that others have already pulled.
+
+## GETTING HELP
+
+Get help for a command
+$ git help [command]
+
+List Git's general help topics
+$ git help -g

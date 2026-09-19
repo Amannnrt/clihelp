@@ -1,0 +1,107 @@
+# SYSTEM INFORMATION
+
+## OS & KERNEL
+
+Show OS, kernel, hostname, and system information
+$ hostnamectl
+
+Show Linux distribution information
+$ cat /etc/os-release
+
+Show system uptime
+$ uptime
+
+Pretty system overview
+$ fastfetch
+
+## CPU
+
+Show CPU model, cores, architecture, and features
+$ lscpu
+
+Show current CPU usage
+$ top -bn1 | grep "Cpu(s)"
+
+Show per-core CPU statistics
+$ mpstat 1 5
+
+## MEMORY
+
+Show RAM and swap usage
+$ free -h
+
+## PROCESSES
+
+List all running processes
+$ ps aux
+
+List processes sorted by memory usage
+$ ps aux --sort=-%mem | head
+
+Interactive process viewer
+$ htop
+
+## DISKS & PARTITIONS
+
+Show filesystem disk usage
+$ df -h
+
+Show disks and partitions as a tree
+$ lsblk -f
+
+Show partition table
+$ sudo fdisk -l
+
+## HARDWARE
+
+List PCI devices
+$ lspci
+
+List USB devices
+$ lsusb
+
+Show hardware inventory
+$ sudo lshw -short
+
+Show RAM hardware information
+$ sudo dmidecode -t memory
+
+## TEMPERATURES
+
+Show CPU and hardware temperatures
+$ sensors
+
+## BATTERY
+
+Show battery status
+$ acpi -b
+
+Show detailed battery information
+$ upower -i $(upower -e | grep BAT)
+
+## BLUETOOTH
+
+Show Bluetooth controller information
+$ bluetoothctl show
+
+List paired and discovered Bluetooth devices
+$ bluetoothctl devices
+
+## NETWORK INTERFACES
+
+Show network interfaces and IP addresses
+$ ip a
+
+## KERNEL & BOOT
+
+Show kernel messages
+$ dmesg
+
+Follow new kernel messages
+$ dmesg -w
+
+Show logs from the current boot
+$ journalctl -b
+
+List loaded kernel modules
+$ lsmod

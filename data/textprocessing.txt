@@ -1,0 +1,192 @@
+# TEXT PROCESSING
+
+## SUBSTITUTE TEXT
+
+Replace the first match on each line
+$ sed 's/old/new/' [file]
+
+Replace all matches
+$ sed 's/old/new/g' [file]
+
+Replace text directly in the file
+$ sed -i 's/old/new/g' [file]
+
+Replace text while ignoring case
+$ sed -i 's/old/new/gI' [file]
+
+Simple alternative to sed
+$ sd "old" "new" [file]
+
+## DELETE OR PRINT SPECIFIC LINES
+
+Delete lines matching a pattern
+$ sed '/pattern/d' [file]
+
+Delete blank lines
+$ sed -i '/^$/d' [file]
+
+Print a range of lines
+$ sed -n '5,10p' [file]
+
+Print only lines matching a pattern
+$ sed -n '/pattern/p' [file]
+
+## EXTRACT FIELDS
+
+Print the first field
+$ awk '{print $1}' [file]
+
+Print selected fields from a colon-separated file
+$ awk -F: '{print $1, $3}' /etc/passwd
+
+Print line numbers with each line
+$ awk '{print NR, $0}' [file]
+
+Extract columns by delimiter
+$ cut -d',' -f1,3 [file]
+
+Extract characters by position
+$ cut -c1-10 [file]
+
+## FILTER WITH CONDITIONS
+
+Print lines where the third field is greater than 100
+$ awk '$3 > 100' [file]
+
+Print the second field from matching lines
+$ awk '/pattern/ {print $2}' [file]
+
+Print lines 5 through 10
+$ awk 'NR>=5 && NR<=10' [file]
+
+Sum values in the first field
+$ awk '{sum += $1} END {print sum}' [file]
+
+Calculate the average of the first field
+$ awk '{sum += $1} END {print sum/NR}' [file]
+
+## SORT LINES
+
+Sort alphabetically
+$ sort [file]
+
+Sort numerically
+$ sort -n [file]
+
+Reverse the sort order
+$ sort -r [file]
+
+Sort by a specific field
+$ sort -t: -k3 -n [file]
+
+Sort and remove duplicates
+$ sort -u [file]
+
+## FIND DUPLICATE LINES
+
+Count occurrences of each line
+$ sort [file] | uniq -c
+
+Show duplicate lines
+$ sort [file] | uniq -d
+
+Show unique lines
+$ sort [file] | uniq -u
+
+Find the most frequent lines
+$ sort [file] | uniq -c | sort -rn
+
+## TRANSLATE OR DELETE CHARACTERS
+
+Convert lowercase letters to uppercase
+$ tr 'a-z' 'A-Z' < [file]
+
+Delete all digits
+$ tr -d '[:digit:]' < [file]
+
+Replace repeated spaces with one space
+$ tr -s ' ' < [file]
+
+Replace newlines with spaces
+$ tr '\n' ' ' < [file]
+
+## COMPARE FILES
+
+Compare two files in unified format
+$ diff -u [file1] [file2]
+
+Compare files side by side
+$ diff -y [file1] [file2]
+
+Compare files byte by byte
+$ cmp [file1] [file2]
+
+Show lines shared by two sorted files
+$ comm -12 [file1] [file2]
+
+## COMBINE FILES
+
+Combine files line by line
+$ paste [file1] [file2]
+
+Combine files using a custom delimiter
+$ paste -d',' [file1] [file2]
+
+Join all lines of a file into one line
+$ paste -s [file]
+
+Join two files using a common field
+$ join [file1] [file2]
+
+## FORMAT TEXT
+
+Align whitespace-separated fields into columns
+$ column -t [file]
+
+Format comma-separated data into columns
+$ column -t -s',' [file]
+
+Wrap text to 80 characters
+$ fmt -w 80 [file]
+
+Wrap text without breaking words
+$ fold -s -w 80 [file]
+
+## NUMBER LINES
+
+Number non-empty lines
+$ nl [file]
+
+Number all lines
+$ nl -ba [file]
+
+Number all lines with cat
+$ cat -n [file]
+
+## COUNT
+
+Count lines, words, and bytes
+$ wc [file]
+
+Count lines
+$ wc -l [file]
+
+Count words
+$ wc -w [file]
+
+Count bytes
+$ wc -c [file]
+
+## REVERSE & SHUFFLE
+
+Reverse the order of lines
+$ tac [file]
+
+Reverse characters on each line
+$ rev [file]
+
+Shuffle lines randomly
+$ shuf [file]
+
+Select a random line
+$ shuf -n 1 [file]

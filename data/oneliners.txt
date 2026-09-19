@@ -1,0 +1,326 @@
+# ONE-LINERS
+
+## SHELL & HISTORY
+
+Run the previous command with sudo
+$ sudo !!
+
+Repeat the last command
+$ !!
+
+Fix a typo in the previous command
+$ ^wrong^correct^
+
+Search command history interactively
+$ Ctrl+R
+
+Edit the current command line in your editor
+$ Ctrl+X Ctrl+E
+
+Alias to repeat the last command
+$ alias r='fc -s'
+
+Show the most used commands
+$ history | awk '{print $2}' | sort | uniq -c | sort -nr | head
+
+Reload shell configuration
+$ source ~/.bashrc
+
+Check if a command exists
+$ command -v cmd >/dev/null && echo yes
+
+Change to the previous directory
+$ cd -
+
+## FILES & DIRECTORIES
+
+Create a directory and enter it
+$ mkdir dir && cd dir
+
+Create 100 numbered directories
+$ mkdir project{01..100}
+
+Quickly backup a file
+$ cp file{,.bak}
+
+Empty/truncate a file
+$ > file.txt
+
+Batch rename files
+$ for f in *.txt; do mv "$f" "${f%.txt}.bak"; done
+
+Create a symbolic link
+$ ln -s target link
+
+Show only directories
+$ ls -d */
+
+List files by modification time
+$ ls -lt
+
+Count files in a directory
+$ ls | wc -l
+
+Show a tree view of a directory
+$ tree
+
+Show a file with line numbers
+$ nl file.txt
+
+Count lines in a file
+$ wc -l file.txt
+
+## TEXT & SEARCH
+
+Remove duplicate lines
+$ sort file | uniq
+
+Search and replace in files
+$ sed -i 's/old/new/g' *.txt
+
+Grep recursively, ignoring case
+$ grep -ir "text" .
+
+Find files by name
+$ find . -iname "*.log"
+
+Find files larger than 100 MB
+$ find . -type f -size +100M
+
+Delete files older than 30 days
+$ find . -mtime +30 -delete
+
+Find and delete empty directories
+$ find . -type d -empty -delete
+
+Find broken symbolic links
+$ find . -xtype l
+
+Find the largest files and directories
+$ du -ah . | sort -hr | head -20
+
+Show directory sizes, sorted
+$ du -sh * | sort -hr
+
+Show disk usage in human-readable format
+$ df -h
+
+Monitor file changes
+$ tail -f logfile
+
+Refresh command output every 2 seconds
+$ watch command
+
+Display the clock in the terminal
+$ watch -n 1 date
+
+## ARCHIVES & FILES
+
+Create a tar.gz backup
+$ tar czf backup.tar.gz directory/
+
+Extract a tar.gz archive
+$ tar xzf archive.tar.gz
+
+Extract any supported archive format
+$ atool -x archive
+
+Split a large file
+$ split -b 1G largefile part-
+
+Reassemble split files
+$ cat part-* > largefile
+
+Check a file checksum
+$ sha256sum file
+
+Encrypt a file with GPG
+$ gpg -c file
+
+Generate a random password
+$ < /dev/urandom tr -dc A-Za-z0-9 | head -c 32; echo
+
+Copy with a progress bar
+$ rsync -ah --progress src dest
+
+Show a progress bar for a pipe
+$ pv largefile | gzip > largefile.gz
+
+Create a sparse 10 GB file
+$ truncate -s 10G file.img
+
+Convert DOS line endings to Unix
+$ dos2unix file
+
+## DATA & FORMATS
+
+Pretty-print JSON from stdin
+$ jq .
+
+Pretty-print XML
+$ xmllint --format file.xml
+
+Pipe command output to clipboard
+$ command | xclip -sel clip
+
+## PROCESSES & SYSTEM
+
+Run a command in the background
+$ command &
+
+Run a command detached from the terminal
+$ nohup command &
+
+Kill a process by name
+$ pkill process_name
+
+View processes sorted by CPU usage
+$ top
+
+Check system uptime
+$ uptime
+
+List cron jobs
+$ crontab -l
+
+List hardware information
+$ lshw -short
+
+Monitor CPU temperature
+$ sensors
+
+Check battery percentage
+$ upower -i $(upower -e | grep BAT) | grep percentage
+
+Show the current timezone
+$ timedatectl
+
+Show the calendar
+$ cal
+
+Show previous, current, and next month
+$ cal -3
+
+## STORAGE & DISKS
+
+Create a RAM disk
+$ mount -t tmpfs -o size=1G tmpfs /mnt/ram
+
+Test disk speed
+$ dd if=/dev/zero of=test bs=1G count=1 oflag=dsync
+
+Burn an ISO to a USB drive
+$ dd if=iso.iso of=/dev/sdX bs=4M status=progress
+
+Securely wipe a drive
+$ shred -v /dev/sdX
+
+## TERMINAL SESSIONS
+
+Record a terminal session
+$ script --log-timing timing.log session.log
+
+Replay a terminal session
+$ scriptreplay --log-timing timing.log session.log
+
+## NETWORKING
+
+Get your public IP address
+$ curl ifconfig.me
+
+List open network ports
+$ ss -tuln
+
+Download a file with resume support
+$ wget -c url
+
+Mount a remote directory over SSH
+$ sshfs user@host:/remote /local
+
+## LOCAL WEB SERVERS
+
+Start a local HTTP server with Python
+$ python3 -m http.server 8000
+
+Start a local HTTP server with Ruby
+$ ruby -run -e httpd . -p 8000
+
+Start a local HTTP server with PHP
+$ php -S localhost:8000
+
+Start a local HTTP server with Node.js
+$ npx http-server
+
+Start a one-liner web server with Bash
+$ while true; do echo -e "HTTP/1.1 200 OK\n\n$(date)" | nc -l 8080; done
+
+## WEB & WEATHER
+
+Show weather in the terminal
+$ curl wttr.in
+
+Get the full weather report
+$ curl v2.wttr.in
+
+Generate a QR code
+$ qrencode -t ANSI "text"
+
+Download a YouTube video
+$ yt-dlp url
+
+Play a YouTube video in the terminal
+$ mpv url
+
+Play a video as ASCII
+$ mplayer -vo caca video.mp4
+
+## MEDIA & DOCUMENTS
+
+Convert an image to a different format
+$ convert input.jpg output.png
+
+Create an animated GIF from images
+$ convert -delay 10 -loop 0 *.png animation.gif
+
+Convert a video to GIF
+$ ffmpeg -i input.mp4 output.gif
+
+Merge multiple PDFs
+$ gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=out.pdf in1.pdf in2.pdf
+
+View a PDF in the terminal
+$ pdftotext file.pdf - | less
+
+## GIT
+
+Show the current Git branch
+$ git branch --show-current
+
+Show Git status in short format
+$ git status -sb
+
+## FUN
+
+Display system information with ASCII art
+$ neofetch
+
+Alternative system information display
+$ screenfetch
+
+Display fortune with a cow
+$ fortune | cowsay
+
+Rainbow text
+$ echo "text" | lolcat
+
+Simulate slow typing
+$ echo "text" | pv -qL 10
+
+Matrix digital rain
+$ cmatrix
+
+Run the train animation
+$ sl
+
+Play a terminal beep
+$ echo -e "\a"

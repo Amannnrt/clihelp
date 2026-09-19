@@ -1,0 +1,290 @@
+# PACKAGE MANAGER
+
+## WHICH PACKAGE MANAGER?
+
+Debian / Ubuntu / Mint
+$ apt
+
+Fedora / RHEL / CentOS
+$ dnf
+
+Arch / Manjaro
+$ pacman
+
+openSUSE
+$ zypper
+
+Gentoo
+$ emerge
+
+Alpine
+$ apk
+
+FreeBSD / Termux
+$ pkg
+
+Distribution-independent app formats
+$ snap
+$ flatpak
+
+## INSTALL FROM REPOSITORY
+
+Debian / Ubuntu
+$ sudo apt install [packageName]
+
+Fedora / RHEL
+$ sudo dnf install [packageName]
+
+Arch / Manjaro
+$ sudo pacman -S [packageName]
+
+openSUSE
+$ sudo zypper install [packageName]
+
+Gentoo
+$ sudo emerge -av [packageName]
+
+Alpine
+$ sudo apk add [packageName]
+
+FreeBSD / Termux
+$ pkg install [packageName]
+
+Snap
+$ sudo snap install [packageName]
+
+Flatpak
+$ flatpak install [remote] [packageName]
+
+## INSTALL FROM FILE
+
+Install a Debian package
+$ sudo apt install ./[package.deb]
+
+Install an RPM package
+$ sudo dnf install [package.rpm]
+
+Install an Arch package
+$ sudo pacman -U [package.pkg.tar.zst]
+
+Install a Flatpak package
+$ flatpak install [package.flatpakref]
+
+Install a FreeBSD package
+$ pkg add [package.txz]
+
+## REMOVE PACKAGES
+
+Debian / Ubuntu
+$ sudo apt remove [packageName]
+
+Fedora / RHEL
+$ sudo dnf remove [packageName]
+
+Arch / Manjaro
+$ sudo pacman -Rs [packageName]
+
+openSUSE
+$ sudo zypper remove [packageName]
+
+Gentoo
+$ sudo emerge --depclean [packageName]
+
+Alpine
+$ sudo apk del [packageName]
+
+FreeBSD / Termux
+$ pkg delete [packageName]
+
+Snap
+$ sudo snap remove [packageName]
+
+Flatpak
+$ flatpak uninstall [packageName]
+
+## CLEAN UP UNUSED PACKAGES
+
+Debian / Ubuntu
+$ sudo apt autoremove
+
+Fedora / RHEL
+$ sudo dnf autoremove
+
+Arch / Manjaro
+$ sudo pacman -Qdtq
+
+## SEARCH FOR A PACKAGE
+
+Debian / Ubuntu
+$ apt search [query]
+
+Fedora / RHEL
+$ dnf search [query]
+
+Arch / Manjaro
+$ pacman -Ss [query]
+
+openSUSE
+$ zypper search [query]
+
+Gentoo
+$ emerge -S [query]
+
+Alpine
+$ apk search [query]
+
+FreeBSD / Termux
+$ pkg search [query]
+
+Snap
+$ snap find [query]
+
+Flatpak
+$ flatpak search [query]
+
+## VIEW PACKAGE INFORMATION
+
+Debian / Ubuntu
+$ apt show [packageName]
+
+Fedora / RHEL
+$ dnf info [packageName]
+
+Arch / Manjaro
+$ pacman -Si [packageName]
+
+openSUSE
+$ zypper info [packageName]
+
+Alpine
+$ apk info [packageName]
+
+FreeBSD / Termux
+$ pkg info [packageName]
+
+Snap
+$ snap info [packageName]
+
+Python package
+$ pip show [packageName]
+
+## UPDATE PACKAGE LISTS
+
+Debian / Ubuntu
+$ sudo apt update
+
+Fedora / RHEL
+$ sudo dnf check-update
+
+openSUSE
+$ sudo zypper refresh
+
+Gentoo
+$ sudo emerge --sync
+
+Alpine
+$ sudo apk update
+
+FreeBSD / Termux
+$ pkg update
+
+## UPGRADE INSTALLED PACKAGES
+
+Debian / Ubuntu
+$ sudo apt upgrade
+
+Fedora / RHEL
+$ sudo dnf upgrade
+
+Arch / Manjaro
+$ sudo pacman -Syu
+
+openSUSE
+$ sudo zypper update
+
+Gentoo
+$ sudo emerge -avuDN @world
+
+Alpine
+$ sudo apk upgrade
+
+FreeBSD / Termux
+$ pkg upgrade
+
+Snap
+$ sudo snap refresh
+
+Flatpak
+$ flatpak update
+
+On Arch, use pacman -Syu for a full system upgrade. Avoid partial upgrades.
+
+## FIND WHICH PACKAGE OWNS A FILE
+
+Debian / Ubuntu
+$ dpkg -S /usr/bin/[file]
+
+Fedora / RHEL
+$ dnf provides /usr/bin/[file]
+
+Arch / Manjaro
+$ pacman -Qo /usr/bin/[file]
+
+## LIST PACKAGE FILES
+
+Show files installed by a Debian package
+$ dpkg -L [packageName]
+
+Show files installed by an RPM package
+$ rpm -ql [packageName]
+
+Show files installed by an Arch package
+$ pacman -Ql [packageName]
+
+## ADD REPOSITORIES
+
+Add a Debian PPA
+$ sudo add-apt-repository ppa:[userName]/[ppaName]
+
+Add a DNF repository
+$ sudo dnf config-manager --add-repo [url]
+
+Add an openSUSE repository
+$ sudo zypper addrepo [url] [alias]
+
+Add Flathub
+$ flatpak remote-add flathub [url]
+
+## LIST INSTALLED PACKAGES
+
+Debian / Ubuntu
+$ apt list --installed
+
+Fedora / RHEL
+$ dnf list installed
+
+Arch / Manjaro
+$ pacman -Q
+
+openSUSE
+$ zypper packages --installed-only
+
+Alpine
+$ apk list --installed
+
+Snap
+$ snap list
+
+Flatpak
+$ flatpak list
+
+Python packages
+$ pip list
+
+## AUR HELPERS
+
+Install an AUR package with yay
+$ yay -S [packageName]
+
+Install an AUR package with paru
+$ paru -S [packageName]

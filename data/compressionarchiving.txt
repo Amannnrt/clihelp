@@ -1,0 +1,184 @@
+# COMPRESSION & ARCHIVING
+
+## GETTING STARTED
+
+`tar` bundles files into an archive, while compressors such as gzip, xz, and zstd reduce the archive size.
+
+Common formats:
+$ .tar.gz
+$ .tar.xz
+$ .tar.zst
+$ .zip
+$ .7z
+
+## TAR ARCHIVES
+
+Create a gzip-compressed archive
+$ tar czf archive.tar.gz [files]
+
+Create an xz-compressed archive
+$ tar cJf archive.tar.xz [files]
+
+Create a zstd-compressed archive
+$ tar --zstd -cf archive.tar.zst [files]
+
+Create an archive while excluding files
+$ tar czf backup.tar.gz --exclude="*.log" [directory]
+
+Extract an archive
+$ tar xf archive.tar.gz
+
+Extract into a specific directory
+$ tar xf archive.tar.zst -C [directory]
+
+List archive contents
+$ tar tf archive.tar.gz
+
+Extract a specific file
+$ tar xf archive.tar.gz path/inside/archive.txt
+
+For archives from untrusted sources, inspect the contents with `tar tf` before extracting.
+
+## COMPRESSION FORMATS
+
+gzip  Fast and widely supported
+bzip2  Better compression than gzip, but slower
+xz  High compression ratio, slower
+zstd  Fast compression with a good ratio
+lz4  Extremely fast, lower compression ratio
+
+## COMPRESS SINGLE FILES
+
+Compress with gzip
+$ gzip [file]
+
+Compress with bzip2
+$ bzip2 [file]
+
+Compress with xz
+$ xz [file]
+
+Compress with zstd
+$ zstd [file]
+
+Keep the original file and use maximum gzip compression
+$ gzip -k -9 [file]
+
+Use all CPU cores with xz
+$ xz -T0 [file]
+
+Use all CPU cores with zstd
+$ zstd -T0 [file]
+
+Parallel gzip compression
+$ pigz [file]
+
+## DECOMPRESS FILES
+
+Decompress gzip
+$ gunzip [file].gz
+
+Decompress bzip2
+$ bunzip2 [file].bz2
+
+Decompress xz
+$ unxz [file].xz
+
+Decompress zstd
+$ unzstd [file].zst
+
+## READ COMPRESSED FILES
+
+Print a gzip-compressed file
+$ zcat [file].gz
+
+View a gzip-compressed file
+$ zless [file].gz
+
+Search a gzip-compressed file
+$ zgrep "pattern" [file].gz
+
+Compare gzip-compressed files
+$ zdiff [file1].gz [file2].gz
+
+Print a bzip2-compressed file
+$ bzcat [file].bz2
+
+Print an xz-compressed file
+$ xzcat [file].xz
+
+Print a zstd-compressed file
+$ zstdcat [file].zst
+
+## ZIP ARCHIVES
+
+Create a ZIP archive
+$ zip -r archive.zip [directory]
+
+Create an encrypted ZIP archive
+$ zip -e -r secret.zip [directory]
+
+Extract a ZIP archive
+$ unzip archive.zip
+
+Extract into a specific directory
+$ unzip archive.zip -d [directory]
+
+List ZIP contents
+$ unzip -l archive.zip
+
+ZIP is convenient for sharing with Windows and macOS. For Linux system backups, prefer tar because it preserves Unix metadata better.
+
+## 7-ZIP ARCHIVES
+
+Create a 7z archive
+$ 7z a archive.7z [files]
+
+Create a password-protected archive
+$ 7z a -p archive.7z [files]
+
+Extract a 7z archive
+$ 7z x archive.7z
+
+List 7z contents
+$ 7z l archive.7z
+
+Use `x` when extracting to preserve the directory structure.
+
+## RAR ARCHIVES
+
+Extract a RAR archive
+$ unrar x archive.rar
+
+List RAR contents
+$ unrar l archive.rar
+
+## UNIVERSAL EXTRACTORS
+
+Extract an archive with automatic format detection
+$ atool -x archive.tar.gz
+
+Extract an archive with unp
+$ unp archive.rar
+
+Extract an archive with dtrx
+$ dtrx archive.zip
+
+Extract an archive with ouch
+$ ouch decompress archive.tar.zst
+
+## CPIO
+
+Create a cpio archive from a file list
+$ find . | cpio -o > archive.cpio
+
+Extract a cpio archive
+$ cpio -id < archive.cpio
+
+## AR ARCHIVES
+
+Create a static library
+$ ar rcs libfoo.a [object-files]
+
+List the contents of an archive
+$ ar t package.deb

@@ -1,0 +1,110 @@
+# SEARCH & FIND
+
+## FIND FILES BY NAME
+
+Find files by name
+$ find . -iname "*report*"
+
+Find a file from the root directory
+$ find / -name "[fileName]" 2>/dev/null
+
+Fast file search with fd
+$ fd [query]
+
+Find files by extension
+$ fd -e pdf [query]
+
+## FIND BY TYPE, SIZE & AGE
+
+Find files between 10 MB and 100 MB
+$ find . -type f -size +10M -size -100M
+
+Find empty files
+$ find . -type f -empty
+
+Find empty directories
+$ find . -type d -empty
+
+Find files modified within the last hour
+$ find . -mmin -60
+
+Find files modified within the last 7 days
+$ find . -mtime -7
+
+Find files not modified for 30 days
+$ find . -mtime +30
+
+Find files owned by a user
+$ find . -user [username]
+
+## ACT ON FOUND FILES
+
+Delete matching files
+$ find . -name "*.tmp" -delete
+
+Make found shell scripts executable
+$ find . -name "*.sh" -exec chmod +x {} +
+
+Search found files for a phrase
+$ find . -type f -exec grep -l "TODO" {} +
+
+Test destructive commands with -print first before using -delete or rm.
+
+## INDEXED SEARCH
+
+Search for files using the locate database
+$ locate [query]
+
+Search using plocate
+$ plocate [query]
+
+Update the locate database
+$ sudo updatedb
+
+## SEARCH FILE CONTENTS
+
+Search inside a file
+$ grep "[query]" [file]
+
+Search recursively with line numbers, ignoring case
+$ grep -rni "[query]" [path]
+
+List only files containing a match
+$ grep -rl "[query]" [path]
+
+Fast recursive search with ripgrep
+$ rg "[query]"
+
+Search only Python files
+$ rg -t py "[query]"
+
+Search command output
+$ history | grep "[phrase]"
+
+Search running processes
+$ ps aux | grep "[processName]"
+
+## FUZZY FINDING
+
+Fuzzy-find files and other lists interactively
+$ fzf
+
+Find a file and open it with Vim
+$ vim $(fzf)
+
+Search command history interactively
+$ history | fzf
+
+## FIND COMMANDS
+
+Show where a command is installed
+$ which [command]
+
+Show the command location and related files
+$ whereis [command]
+
+Show how the shell interprets a command
+$ type [command]
+
+Show the executable used by the shell
+$ command -v [command]
