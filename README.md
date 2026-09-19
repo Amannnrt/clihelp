@@ -5,7 +5,7 @@ Pick a category, get colorful, copy-ready commands.
 
 ## Install
 
-Download the latest `.deb` from [Releases](https://github.com/YOURUSER/clihelp/releases), then:
+Download the latest `.deb` from [Releases](https://github.com/Amannnrt/clihelp/releases), then:
 
 ```bash
 sudo apt install ./clihelp_1.0.0_amd64.deb
