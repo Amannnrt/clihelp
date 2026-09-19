@@ -42,4 +42,4 @@ Cheatsheets are plain text files in `data/`:
 
 ## License
 
-MIT (or whichever you choose)
+MIT
